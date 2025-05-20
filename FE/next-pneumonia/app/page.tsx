@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@heroui/button";
+import { Image, Skeleton } from "@heroui/react";
 import { FcAddImage } from "react-icons/fc";
 import { useEffect, useRef, useState } from "react";
 
@@ -11,8 +12,14 @@ import usePredictService from "@/service/predict_service";
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const { prediction, loading, handleFileChange, handleUpload } =
-    usePredictService(file, setFile);
+  const {
+    prediction,
+    loading,
+    gradcamImage,
+    handleFileChange,
+    handleUpload,
+    handleUploadGradcam,
+  } = usePredictService(file, setFile);
 
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -29,6 +36,7 @@ export default function Home() {
   useEffect(() => {
     if (file) {
       handleUpload(file);
+      handleUploadGradcam(file);
     }
   }, [file]);
 
@@ -67,7 +75,39 @@ export default function Home() {
         type="file"
         onChange={handleFileInputChange}
       />
-
+      {loading ? (
+        <Skeleton className="rounded-lg" isLoaded={loading}>
+          <Image
+            alt="Woman listing to music"
+            className="object-cover"
+            src={
+              gradcamImage
+                ? `data:image/png;base64,${gradcamImage}`
+                : "grad.png"
+            }
+            style={{ width: "1500px", height: "450px" }}
+          />
+        </Skeleton>
+      ) : (
+        <>
+          <div className="inline-block max-w-2xl text-center justify-center">
+            <span className={title()}>AI-powered&nbsp;</span>
+            <span className={title({ color: "violet" })}>Pneumonia&nbsp;</span>
+            <br />
+            <span className={title()}>Detection with GradCAM.</span>
+          </div>
+          <Image
+            alt="Woman listing to music"
+            className="object-cover"
+            src={
+              gradcamImage
+                ? `data:image/png;base64,${gradcamImage}`
+                : "grad.png"
+            }
+            style={{ width: "1500px", height: "450px" }}
+          />
+        </>
+      )}
       {/* <div className="mt-8">
         <Snippet hideCopyButton hideSymbol variant="bordered">
           <span>

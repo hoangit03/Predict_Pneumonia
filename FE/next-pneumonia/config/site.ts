@@ -1,8 +1,9 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Pneumonia Detection",
+  description:
+    "AI-powered Pneumonia Detection from Chest X-ray.Accurate, fast, and reliable deep learning-based diagnosis.",
   navItems: [
     {
       label: "Home",

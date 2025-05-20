@@ -23,18 +23,10 @@ const PredictCard: React.FC<PredictCardProps> = ({
   const [textPrediction, setTextPrediction] = useState<string | null>(null);
 
   useEffect(() => {
-    const numericPrediction = parseFloat(prediction ?? "NaN");
-
-    if (!isNaN(numericPrediction)) {
-      const threshold = parseFloat(process.env.NEXT_PUBLIC_THRESHOLD ?? "0");
-
-      if (numericPrediction > threshold) {
-        setTextPrediction("Phổi bình thường");
-      } else {
-        setTextPrediction("Viêm phổi");
-      }
+    if (prediction) {
+      setTextPrediction(`${prediction}`);
     } else {
-      setTextPrediction("Dữ liệu không hợp lệ");
+      setTextPrediction(null);
     }
   }, [prediction]);
 

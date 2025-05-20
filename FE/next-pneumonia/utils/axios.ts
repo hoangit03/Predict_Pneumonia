@@ -24,7 +24,7 @@ export const postformDataAxios = async <T>(
       headers: {
         "Content-Type": "multipart/form-data",
       },
-      timeout: 10000,
+      timeout: 60000,
     });
 
     return response;
